@@ -1,0 +1,13 @@
+[package]
+name = "advent_of_code23"
+description = "Solutions to Advent of Code 2023 in Rust 🎄"
+authors = ["Pedro Godinho <pedro.fernandez.godinho@gmail.com>"]
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+clap = { version = "4.4.10", features = ["derive"] }
+itertools = "0.12.0"
+rayon = "1.8.0"

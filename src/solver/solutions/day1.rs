@@ -15,8 +15,8 @@ pub fn part2(input: &str) -> String {
     let sum: u32 = input
         .lines()
         .map(|line| {
-            let mut first = 255;
-            let mut last = 255;
+            let mut first = None;
+            let mut last = 0;
             for i in 0..line.len() {
                 let digit = if let Some(digit) = line.chars().nth(i).unwrap().to_digit(10) {
                     Some(digit as u8)
@@ -24,13 +24,13 @@ pub fn part2(input: &str) -> String {
                     get_digit(&line[i..])
                 };
                 if let Some(digit) = digit {
-                    if first == 255 {
-                        first = digit;
+                    if first.is_none() {
+                        first = Some(digit);
                     }
                     last = digit;
                 }
             }
-            first as u32 * 10 + last as u32
+            first.unwrap() as u32 * 10 + last as u32
         })
         .sum();
     sum.to_string()

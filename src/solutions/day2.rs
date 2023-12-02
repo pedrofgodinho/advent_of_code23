@@ -1,29 +1,37 @@
-pub fn part1(input: &str) -> String {
-    let red = 12;
-    let green = 13;
-    let blue = 14;
+use super::Solution;
 
-    input
-        .lines()
-        .map(|line| Game::from_str(line))
-        .filter(|game| {
-            game.groups
-                .iter()
-                .all(|group| group.possible_for(red, green, blue))
-        })
-        .map(|game| game.id)
-        .sum::<usize>()
-        .to_string()
-}
+pub struct Day2;
 
-pub fn part2(input: &str) -> String {
-    input
-        .lines()
-        .map(|line| Game::from_str(line))
-        .map(|game| game.mins())
-        .map(|min| min.red * min.blue * min.green)
-        .sum::<usize>()
-        .to_string()
+impl Solution for Day2 {
+    fn part1(&self, input: &str) -> String {
+        let red = 12;
+        let green = 13;
+        let blue = 14;
+
+        input
+            .lines()
+            .map(|line| Game::from_str(line))
+            .filter(|game| {
+                game.groups
+                    .iter()
+                    .all(|group| group.possible_for(red, green, blue))
+            })
+            .map(|game| game.id)
+            .sum::<usize>()
+            .to_string()
+    }
+
+    fn part2(&self, input: &str) -> String {
+        input
+            .lines()
+            .map(|line| Game::from_str(line))
+            .map(|game| game.mins())
+            .map(|min| min.red * min.blue * min.green)
+            .sum::<usize>()
+            .to_string()
+    }
+
+    fn setup(&mut self) {}
 }
 
 #[derive(Debug)]

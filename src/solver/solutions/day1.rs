@@ -15,28 +15,33 @@ pub fn part2(input: &str) -> String {
     let sum: u32 = input
         .lines()
         .map(|line| {
-            let mut first = None;
-            let mut last = 0;
+            let mut first = 0;
             for i in 0..line.len() {
-                let digit = if let Some(digit) = line.chars().nth(i).unwrap().to_digit(10) {
-                    Some(digit as u8)
-                } else {
-                    get_digit(&line[i..])
-                };
+                let digit = get_digit(&line[i..]);
                 if let Some(digit) = digit {
-                    if first.is_none() {
-                        first = Some(digit);
-                    }
-                    last = digit;
+                    first = digit;
+                    break;
                 }
             }
-            first.unwrap() as u32 * 10 + last as u32
+
+            let mut last = 0;
+            for i in (0..line.len()).rev() {
+                let digit = get_digit(&line[i..]);
+                if let Some(digit) = digit {
+                    last = digit;
+                    break;
+                }
+            }
+            first * 10 + last
         })
         .sum();
     sum.to_string()
 }
 
-fn get_digit(string: &str) -> Option<u8> {
+fn get_digit(string: &str) -> Option<u32> {
+    if let Some(digit) = string.chars().nth(0).unwrap().to_digit(10) {
+        return Some(digit);
+    }
     if string.starts_with("one") {
         Some(1)
     } else if string.starts_with("two") {

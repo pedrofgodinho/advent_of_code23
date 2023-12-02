@@ -47,7 +47,7 @@ impl Solution for Day1 {
 }
 
 fn get_digit(string: &str) -> Option<u32> {
-    if let Some(digit) = string.chars().nth(0).unwrap().to_digit(10) {
+    if let Some(digit) = string.chars().next().unwrap().to_digit(10) {
         return Some(digit);
     }
     if string.starts_with("one") {

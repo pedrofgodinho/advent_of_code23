@@ -1,7 +1,11 @@
 use clap::Parser;
 use rayon::{prelude::*, ThreadPoolBuilder};
 use solutions::Solution;
-use std::{fs, path::PathBuf, time::Instant};
+use std::{
+    fs,
+    path::{Path, PathBuf},
+    time::Instant,
+};
 
 use crate::solutions::get_solutions;
 
@@ -24,11 +28,11 @@ struct Args {
     time_setup: bool,
 }
 
-fn get_input_for_day(dir: &PathBuf, day: usize) -> Result<String, ()> {
+fn get_input_for_day(dir: &Path, day: usize) -> Result<String, ()> {
     fs::read_to_string(dir.join(format!("{day}.txt"))).map_err(|_err| ())
 }
 
-fn solve(solution: &Box<dyn Solution>, day: usize, in_dir: &PathBuf) {
+fn solve(solution: &dyn Solution, day: usize, in_dir: &Path) {
     let input = match get_input_for_day(in_dir, day) {
         Ok(input) => input,
         Err(_) => {
@@ -73,7 +77,7 @@ fn main() {
                 start = Instant::now();
             }
 
-            solve(solution, day, &args.in_dir);
+            solve(solution.as_ref(), day, &args.in_dir);
         }
         None => {
             if !args.time_setup {
@@ -90,7 +94,7 @@ fn main() {
                         if args.time_setup {
                             solution.setup();
                         }
-                        solve(&solution, day + 1, &args.in_dir);
+                        solve(solution.as_ref(), day + 1, &args.in_dir);
                     });
             } else {
                 solutions
@@ -100,7 +104,7 @@ fn main() {
                         if args.time_setup {
                             solution.setup();
                         }
-                        solve(solution, day + 1, &args.in_dir);
+                        solve(solution.as_ref(), day + 1, &args.in_dir);
                     });
             }
         }

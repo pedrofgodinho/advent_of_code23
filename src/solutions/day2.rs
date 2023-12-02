@@ -10,7 +10,7 @@ impl Solution for Day2 {
 
         input
             .lines()
-            .map(|line| Game::from_str(line))
+            .map(Game::from_str)
             .filter(|game| {
                 game.groups
                     .iter()
@@ -24,7 +24,7 @@ impl Solution for Day2 {
     fn part2(&self, input: &str) -> String {
         input
             .lines()
-            .map(|line| Game::from_str(line))
+            .map(Game::from_str)
             .map(|game| game.mins())
             .map(|min| min.red * min.blue * min.green)
             .sum::<usize>()
@@ -59,7 +59,7 @@ impl Game {
         let id = sections
             .next()
             .unwrap()
-            .split(" ")
+            .split(' ')
             .nth(1)
             .unwrap()
             .parse()
@@ -73,7 +73,7 @@ impl Game {
                 let mut green = 0;
                 let mut blue = 0;
                 for draw in group.split(", ") {
-                    let mut split = draw.split(" ");
+                    let mut split = draw.split(' ');
                     let number = split.next().unwrap().parse::<usize>().unwrap();
                     let color = split.next().unwrap();
                     match color {

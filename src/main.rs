@@ -10,6 +10,8 @@ use std::{
 use crate::solutions::get_solutions;
 
 mod solutions;
+#[cfg(test)]
+mod tests;
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]

@@ -28,7 +28,7 @@ impl Solution for Day3 {
                     let i = (i as isize + offset.0) as usize;
                     let j = (j as isize + offset.1) as usize;
                     if (0..cols).contains(&i) && (0..rows).contains(&j) {
-                        around_symbols[[i as usize, j as usize]] = true;
+                        around_symbols[[i, j]] = true;
                     }
                 }
             }
@@ -66,18 +66,17 @@ impl Solution for Day3 {
         let mut gear_numbers = Array2::from_elem(bytes.raw_dim(), HashSet::new());
         let mut gear_count = 0;
 
-        bytes.indexed_iter().for_each(|((i, j), &b)| match b {
-            b'*' => {
+        bytes.indexed_iter().for_each(|((i, j), &b)| {
+            if b == b'*' {
                 for offset in (-1..=1).cartesian_product(-1..=1).filter(|&c| c != (0, 0)) {
                     let i = (i as isize + offset.0) as usize;
                     let j = (j as isize + offset.1) as usize;
                     if (0..cols).contains(&i) && (0..rows).contains(&j) {
-                        gear_numbers[[i as usize, j as usize]].insert(gear_count);
+                        gear_numbers[[i, j]].insert(gear_count);
                     }
                 }
                 gear_count += 1;
             }
-            _ => (),
         });
 
         let mut gear_groups = Vec::new();

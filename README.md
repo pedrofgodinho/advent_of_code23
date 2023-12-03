@@ -1,5 +1,6 @@
 
 # Advent of Code 2023
+![Tests](https://github.com/pedrofgodinho/advent_of_code23/actions/workflows/rust.yml/badge.svg)
 
 Solutions to [Advent of Code 2023](https://adventofcode.com/2023) in Rust 🎄
 

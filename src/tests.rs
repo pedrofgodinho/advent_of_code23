@@ -120,3 +120,14 @@ humidity-to-location map:
     let result2 = "46";
     test_day(5, input, result1, input, result2);
 }
+
+#[test]
+fn day6() {
+    let input = "\
+Time:      7  15   30
+Distance:  9  40  200
+";
+    let result1 = "288";
+    let result2 = "71503";
+    test_day(6, input, result1, input, result2);
+}

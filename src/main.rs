@@ -80,7 +80,7 @@ fn solve_day(day: usize, part: Option<u8>, in_dir: &Path) {
         input = match get_input_for_day(in_dir, day) {
             Ok(input) => input,
             Err(_) => {
-                println!("Could not find input for day {day}");
+                println!("Could not find input for day {}", day);
                 return;
             }
         };
@@ -124,13 +124,13 @@ fn solve_all(threaded: bool, in_dir: &Path) {
                     Ok(input) => {
                         println!(
                             "Day {} part 1: {}\nDay {} part 2: {}",
-                            day,
+                            day + 1,
                             solution.part1(&input),
-                            day,
+                            day + 1,
                             solution.part2(&input)
                         );
                     }
-                    Err(_) => println!("Input not found for day {}", day),
+                    Err(_) => println!("Input not found for day {}", day + 1),
                 },
             );
         } else {
@@ -142,13 +142,13 @@ fn solve_all(threaded: bool, in_dir: &Path) {
                     Ok(input) => {
                         println!(
                             "Day {} part 1: {}\nDay {} part 2: {}",
-                            day,
+                            day + 1,
                             solution.part1(&input),
-                            day,
+                            day + 1,
                             solution.part2(&input)
                         );
                     }
-                    Err(_) => println!("Input not found for day {}", day),
+                    Err(_) => println!("Input not found for day {}", day + 1),
                 });
         }
     });

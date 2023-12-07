@@ -13,4 +13,4 @@ Solutions to [Advent of Code 2023](https://adventofcode.com/2023) in Rust 🎄
 | [4](src/solutions/day4.rs)   |   ⭐   |   ⭐   | Much easier than day 3. Very fun challenge overall. 
 | [5](src/solutions/day5.rs)   |   ⭐   |   ⭐   | Pretty fun challenge. Part 1 was fairly easy, part 2 took some debugging to get right. Curiously, I later tried a brute-force solution, and it "only" takes 18 seconds on my cpu. 
 | [6](src/solutions/day6.rs)   |   ⭐   |   ⭐   | Simple and elegant problem, with a simple and elegant solution.
-
+| [7](src/solutions/day7.rs)   |   ⭐   |   ⭐   | A bit boring, in that the challenge is simple but requires quite a bit of writing to solve. Not too hard otherwise. 

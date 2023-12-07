@@ -131,3 +131,17 @@ Distance:  9  40  200
     let result2 = "71503";
     test_day(6, input, result1, input, result2);
 }
+
+#[test]
+fn day7() {
+    let input = "\
+32T3K 765
+T55J5 684
+KK677 28
+KTJJT 220
+QQQJA 483
+";
+    let result1 = "6440";
+    let result2 = "5905";
+    test_day(7, input, result1, input, result2);
+}

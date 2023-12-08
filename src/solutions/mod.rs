@@ -5,6 +5,7 @@ mod day4;
 mod day5;
 mod day6;
 mod day7;
+mod day8;
 
 pub trait Solution: Sync + Send {
     fn setup(&mut self);
@@ -12,7 +13,7 @@ pub trait Solution: Sync + Send {
     fn part2(&self, input: &str) -> String;
 }
 
-pub fn get_solutions() -> [Box<dyn Solution>; 7] {
+pub fn get_solutions() -> [Box<dyn Solution>; 8] {
     [
         Box::new(day1::Day1),
         Box::new(day2::Day2 {}),
@@ -21,5 +22,6 @@ pub fn get_solutions() -> [Box<dyn Solution>; 7] {
         Box::new(day5::Day5::new()),
         Box::new(day6::Day6::new()),
         Box::new(day7::Day7::new()),
+        Box::new(day8::Day8::new()),
     ]
 }

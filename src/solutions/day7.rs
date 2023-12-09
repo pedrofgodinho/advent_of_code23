@@ -187,7 +187,11 @@ impl Hand {
             .copied()
             .collect::<Vec<_>>();
         let mut max_count = 0;
-        let mut max_card = if cards.len() > 0 { cards[0] } else { Card::Two };
+        let mut max_card = if !cards.is_empty() {
+            cards[0]
+        } else {
+            Card::Two
+        };
         for card in &cards {
             if card == &Card::Jack {
                 continue;
@@ -198,7 +202,7 @@ impl Hand {
                 max_card = *card;
             }
         }
-        let mut my_cards = my_cards.clone();
+        let mut my_cards = *my_cards;
         for card in my_cards.iter_mut() {
             if card == &Card::Jack {
                 *card = max_card;
@@ -210,20 +214,7 @@ impl Hand {
 
 impl PartialOrd for Hand {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        if self.hand_type == other.hand_type {
-            for idx in 0..5 {
-                let cmp = if self.part_2_rules {
-                    self.cards[idx].compare_2(&other.cards[idx])
-                } else {
-                    self.cards[idx].cmp(&other.cards[idx])
-                };
-                if cmp.is_ne() {
-                    return Some(cmp);
-                }
-            }
-            panic!("Equal Hands");
-        }
-        Some(self.hand_type.cmp(&other.hand_type))
+        Some(self.cmp(other))
     }
 }
 
@@ -237,6 +228,19 @@ impl Eq for Hand {}
 
 impl Ord for Hand {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
-        self.partial_cmp(other).unwrap()
+        if self.hand_type == other.hand_type {
+            for idx in 0..5 {
+                let cmp = if self.part_2_rules {
+                    self.cards[idx].compare_2(&other.cards[idx])
+                } else {
+                    self.cards[idx].cmp(&other.cards[idx])
+                };
+                if cmp.is_ne() {
+                    return cmp;
+                }
+            }
+            panic!("Equal Hands");
+        }
+        self.hand_type.cmp(&other.hand_type)
     }
 }

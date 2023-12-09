@@ -175,3 +175,15 @@ XXX = (XXX, XXX)
     let result2 = "6";
     test_day(8, input1, result1, input2, result2);
 }
+
+#[test]
+fn day9() {
+    let input = "\
+0 3 6 9 12 15
+1 3 6 10 15 21
+10 13 16 21 30 45
+";
+    let result1 = "114";
+    let result2 = "2";
+    test_day(9, input, result1, input, result2);
+}

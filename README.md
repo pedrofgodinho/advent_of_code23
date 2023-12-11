@@ -17,3 +17,4 @@ Solutions to [Advent of Code 2023](https://adventofcode.com/2023) in Rust 🎄
 | [8](src/solutions/day8.rs)   |   ⭐   |   ⭐   | Very interesting problem, very poorly stated. Part 1 is great. Part 2, however, requires you making a some assumptions that are not at all stated. 
 | [9](src/solutions/day9.rs)   |   ⭐   |   ⭐   | Found this one to be very easy, part 1 and 2 being basically the same. Fun challenge nonetheless.
 | [10](src/solutions/day10.rs) |   ⭐   |   ⭐   | Very fun, but slightly tricky challenge. Second part can be solved in tons of different ways. Left some prints commented out instead of removing them because they're just so satifying.
+| [11](src/solutions/day11.rs) |   ⭐   |   ⭐   | Not much to say, it's a fairly easy challenge. Not super interesting, but not a bad challenge either. 

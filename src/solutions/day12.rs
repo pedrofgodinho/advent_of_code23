@@ -113,15 +113,14 @@ impl StatusRow {
     }
 
     fn count_solutions(self) -> usize {
-        count_solutions_aux(&self, 0, 0, 0)
+        count_solutions_aux(&self.springs, &self.groups, 0)
     }
 }
 
-fn hash(row: &StatusRow, idx1: usize, idx2: usize, count: usize) -> u64 {
+fn hash(row: &[SpringStatus], groups: &[usize], count: usize) -> u64 {
     let mut hasher = AHasher::default();
     row.hash(&mut hasher);
-    idx1.hash(&mut hasher);
-    idx2.hash(&mut hasher);
+    groups.hash(&mut hasher);
     count.hash(&mut hasher);
     hasher.finish()
 }
@@ -129,68 +128,61 @@ fn hash(row: &StatusRow, idx1: usize, idx2: usize, count: usize) -> u64 {
 #[cached(
     type = "SizedCache<u64, usize>",
     create = "{SizedCache::with_size(10000)}",
-    convert = r#"{ hash(s, springs_idx, groups_idx, damaged_count) }"#
+    convert = r#"{ hash(row, groups, count) }"#
 )]
-fn count_solutions_aux(
-    s: &StatusRow,
-    springs_idx: usize,
-    groups_idx: usize,
-    damaged_count: usize,
-) -> usize {
-    if springs_idx == s.springs.len() {
-        if groups_idx == s.groups.len() {
+fn count_solutions_aux(row: &[SpringStatus], groups: &[usize], count: usize) -> usize {
+    if row.is_empty() {
+        if groups.is_empty() || (groups.len() == 1 && groups[0] == count) {
             return 1;
-        } else {
+        }
+        return 0;
+    }
+    if groups.is_empty() {
+        if row.contains(&SpringStatus::Damaged) {
             return 0;
         }
+        return 1;
     }
 
-    match s.springs[springs_idx] {
+    match row[0] {
+        SpringStatus::Damaged => {
+            if count > groups[0] {
+                return 0;
+            }
+            let skip = row
+                .iter()
+                .position(|&s| s != SpringStatus::Damaged)
+                .unwrap_or(1);
+            return count_solutions_aux(&row[skip..], groups, count + skip);
+        }
         SpringStatus::Functional => {
-            let count = s.springs[springs_idx..]
+            let skip = row
                 .iter()
                 .position(|&s| s != SpringStatus::Functional)
                 .unwrap_or(1);
-            if groups_idx < s.groups.len() && damaged_count == s.groups[groups_idx] {
-                // There's still groups to go, and current group checks out
-                count_solutions_aux(&s, springs_idx + count, groups_idx + 1, 0)
-            } else if damaged_count == 0 {
-                // Either there's no more groups to go or current group doesn't match next group
-                // But count is zero, it's ok
-                count_solutions_aux(&s, springs_idx + count, groups_idx, 0)
+            if count == 0 {
+                return count_solutions_aux(&row[skip..], groups, 0);
+            } else if count == groups[0] {
+                return count_solutions_aux(&row[skip..], &groups[1..], 0);
             } else {
-                // Error
-                0
+                return 0;
             }
         }
-        SpringStatus::Damaged => {
-            // ###. -> .
-            // damaged_count + 3
-            // idx + 3
-            let count = s.springs[springs_idx..]
-                .iter()
-                .position(|&s| s != SpringStatus::Damaged)
-                .unwrap();
-            count_solutions_aux(&s, springs_idx + count, groups_idx, damaged_count + count)
-        }
         SpringStatus::Unknown => {
-            // Pretend ? is a #
-            let broken_count =
-                count_solutions_aux(&s, springs_idx + 1, groups_idx, damaged_count + 1);
-
-            // Pretend ? is a .
-            let functional_count =
-                if groups_idx < s.groups.len() && damaged_count == s.groups[groups_idx] {
-                    // We finished a group
-                    count_solutions_aux(&s, springs_idx + 1, groups_idx + 1, 0)
-                } else if damaged_count == 0 {
-                    // We were not in a group
-                    count_solutions_aux(&s, springs_idx + 1, groups_idx, 0)
+            if count != 0 {
+                if groups[0] == count {
+                    return count_solutions_aux(&row[1..], &groups[1..], 0);
                 } else {
-                    // We finished a group but with the wrong value, therefore ? cannot be a .
-                    0
-                };
-            broken_count + functional_count
+                    return count_solutions_aux(&row[1..], groups, count + 1);
+                }
+            } else {
+                if groups[0] == count {
+                    return count_solutions_aux(&row[1..], groups, 0);
+                } else {
+                    return count_solutions_aux(&row[1..], groups, 0)
+                        + count_solutions_aux(&row[1..], groups, 1);
+                }
+            }
         }
     }
 }

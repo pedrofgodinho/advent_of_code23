@@ -321,3 +321,31 @@ fn day12_part1() {
 fn day12_part2() {
     test_day(12, DAY12_INPUT, "525152", Part::Part2);
 }
+
+const DAY13_INPUT: &str = indoc! {"
+    #.##..##.
+    ..#.##.#.
+    ##......#
+    ##......#
+    ..#.##.#.
+    ..##..##.
+    #.#.##.#.
+
+    #...##..#
+    #....#..#
+    ..##..###
+    #####.##.
+    #####.##.
+    ..##..###
+    #....#..#
+"};
+
+#[test]
+fn day13_part1() {
+    test_day(13, DAY13_INPUT, "405", Part::Part1);
+}
+
+#[test]
+fn day13_part2() {
+    test_day(13, DAY13_INPUT, "400", Part::Part2);
+}

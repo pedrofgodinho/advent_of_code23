@@ -21,7 +21,7 @@ impl Solution for Day9 {
             .to_string()
     }
 
-    fn setup(&mut self) {}
+    fn parse(&mut self) {}
 }
 
 impl Day9 {

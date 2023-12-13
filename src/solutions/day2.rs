@@ -31,7 +31,7 @@ impl Solution for Day2 {
             .to_string()
     }
 
-    fn setup(&mut self) {}
+    fn parse(&mut self) {}
 }
 
 #[derive(Debug)]

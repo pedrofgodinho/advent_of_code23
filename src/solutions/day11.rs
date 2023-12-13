@@ -41,7 +41,7 @@ impl Solution for Day11 {
         sum.to_string()
     }
 
-    fn setup(&mut self) {}
+    fn parse(&mut self) {}
 }
 
 impl Day11 {

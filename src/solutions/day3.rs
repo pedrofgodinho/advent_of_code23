@@ -115,5 +115,5 @@ impl Solution for Day3 {
             .to_string()
     }
 
-    fn setup(&mut self) {}
+    fn parse(&mut self) {}
 }

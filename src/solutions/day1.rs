@@ -43,7 +43,7 @@ impl Solution for Day1 {
         sum.to_string()
     }
 
-    fn setup(&mut self) {}
+    fn parse(&mut self) {}
 }
 
 fn get_digit(string: &str) -> Option<u32> {

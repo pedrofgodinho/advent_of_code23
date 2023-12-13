@@ -31,7 +31,7 @@ impl Solution for Day4 {
         counts.iter().sum::<usize>().to_string()
     }
 
-    fn setup(&mut self) {}
+    fn parse(&mut self) {}
 }
 
 impl Day4 {

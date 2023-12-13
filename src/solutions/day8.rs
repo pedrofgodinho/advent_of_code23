@@ -44,7 +44,7 @@ impl Solution for Day8 {
             .to_string()
     }
 
-    fn setup(&mut self) {}
+    fn parse(&mut self) {}
 }
 
 impl Day8 {

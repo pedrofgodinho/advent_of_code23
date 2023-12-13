@@ -30,7 +30,7 @@ impl Solution for Day12 {
             .to_string()
     }
 
-    fn setup(&mut self) {}
+    fn parse(&mut self) {}
 }
 
 impl Day12 {

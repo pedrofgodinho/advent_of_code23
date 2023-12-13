@@ -70,7 +70,7 @@ impl Solution for Day5 {
             .to_string()
     }
 
-    fn setup(&mut self) {}
+    fn parse(&mut self) {}
 }
 
 impl Day5 {

@@ -13,7 +13,7 @@ mod day8;
 mod day9;
 
 pub trait Solution: Sync + Send {
-    fn setup(&mut self);
+    fn parse(&mut self);
     fn part1(&self, input: &str) -> String;
     fn part2(&self, input: &str) -> String;
 }

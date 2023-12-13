@@ -18,7 +18,7 @@ impl Solution for Day10 {
         map.enclosed().to_string()
     }
 
-    fn setup(&mut self) {}
+    fn parse(&mut self) {}
 }
 
 impl Day10 {

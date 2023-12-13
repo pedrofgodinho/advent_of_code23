@@ -32,7 +32,7 @@ impl Solution for Day7 {
             .to_string()
     }
 
-    fn setup(&mut self) {}
+    fn parse(&mut self) {}
 }
 
 impl Day7 {

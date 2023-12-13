@@ -4,7 +4,7 @@ use indoc::indoc;
 fn test_day(day: usize, input: &str, result: &str, part: Part) {
     let mut solutions = get_solutions();
     let solution = &mut solutions[day - 1];
-    solution.setup();
+    solution.parse();
 
     match part {
         Part::Part1 => assert_eq!(solution.part1(input), result),

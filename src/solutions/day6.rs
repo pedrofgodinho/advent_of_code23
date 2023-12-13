@@ -55,7 +55,7 @@ impl Solution for Day6 {
         race.ways_to_beat().to_string()
     }
 
-    fn setup(&mut self) {}
+    fn parse(&mut self) {}
 }
 
 impl Day6 {

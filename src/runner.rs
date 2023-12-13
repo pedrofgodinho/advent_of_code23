@@ -119,7 +119,7 @@ pub fn run_days(days: &[usize], part: Option<i64>, input_dir: &Path) {
 
 fn run_day(solution: &mut dyn Solution, part: Option<i64>, input: &str) -> DayResult {
     let parse_start = Instant::now();
-    solution.setup();
+    solution.parse();
     let parse = Instant::now().duration_since(parse_start);
 
     let (part1_duration, part1_result, part2_duration, part2_result) = match part {

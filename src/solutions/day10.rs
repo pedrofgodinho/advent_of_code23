@@ -175,7 +175,7 @@ impl PipeMap {
                         }
                         _ => (), //print!("{cell}"),
                     },
-                    MapCell::Starting => print!("S"),
+                    MapCell::Starting => (), // print!("S"),
                     _ => {
                         if enclosed {
                             counter += 1;

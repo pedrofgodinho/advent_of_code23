@@ -7,6 +7,7 @@ name = "advent_of_code23"
 version = "0.1.0"
 dependencies = [
  "ahash",
+ "ascii_table",
  "cached",
  "clap",
  "indoc",
@@ -82,6 +83,12 @@ dependencies = [
  "anstyle",
  "windows-sys",
 ]
+
+[[package]]
+name = "ascii_table"
+version = "4.0.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3c2bee9b9ee0e5768772e38c07ef0ba23a490d7e1336ec7207c25712a2661c55"
 
 [[package]]
 name = "autocfg"

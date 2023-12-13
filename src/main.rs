@@ -47,7 +47,8 @@ macro_rules! timed {
             let start = Instant::now();
             $to_time
             let duration = Instant::now().duration_since(start);
-            println!("{}: {:.04}ms", $to_print, duration.as_secs_f64() * 1000.0);
+            // println!("{}: {:.04}ms", $to_print, duration.as_secs_f64() * 1000.0);
+            println!("{}: {:?}", $to_print, duration);
         }
     };
 }

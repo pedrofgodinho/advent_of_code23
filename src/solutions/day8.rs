@@ -2,59 +2,69 @@ use std::collections::HashMap;
 
 use super::Solution;
 
-pub struct Day8 {}
+#[ouroboros::self_referencing]
+pub struct Day8 {
+    input: String,
+    #[covariant]
+    #[borrows(input)]
+    path: PathSequence<'this>,
+    #[covariant]
+    #[borrows(input)]
+    node_map: HashMap<&'this str, Node<'this>>,
+    #[covariant]
+    #[borrows(node_map)]
+    starting_nodes: Vec<&'this str>,
+}
 
 impl Solution for Day8 {
-    fn part1(&self, input: &str) -> String {
-        let mut lines = input.lines();
-        let path = Path::from_str(lines.next().unwrap());
-
-        let nodes = lines
-            .skip(1)
-            .map(|line| {
-                let node = Node::from_str(line);
-                (node.name, node)
-            })
-            .collect::<HashMap<_, _>>();
-
-        path.solve_node_map(&nodes, "AAA").to_string()
+    fn part1(&mut self) -> String {
+        self.borrow_path()
+            .solve_node_map(&self.borrow_node_map(), "AAA")
+            .to_string()
     }
 
-    fn part2(&self, input: &str) -> String {
-        let mut lines = input.lines();
-        let path = Path::from_str(lines.next().unwrap());
-
-        let mut starting_nodes = Vec::new();
-
-        let nodes = lines
-            .skip(1)
-            .map(|line| {
-                let node = Node::from_str(line);
-                if node.name.ends_with('A') {
-                    starting_nodes.push(node.name);
-                }
-                (node.name, node)
-            })
-            .collect::<HashMap<_, _>>();
-
-        starting_nodes
+    fn part2(&mut self) -> String {
+        self.borrow_starting_nodes()
             .iter()
-            .map(|node| path.solve_node_map(&nodes, node))
+            .map(|node| {
+                self.borrow_path()
+                    .solve_node_map(&self.borrow_node_map(), node)
+            })
             .fold(1, |accum, n| num::integer::lcm(n, accum))
             .to_string()
     }
 
-    fn parse(&mut self) {}
-}
-
-impl Day8 {
-    pub fn new() -> Self {
-        Self {}
+    fn parse(input: String) -> Box<dyn Solution> {
+        Box::new(
+            Day8Builder {
+                input,
+                path_builder: |input: &String| {
+                    PathSequence::from_str(input.lines().next().unwrap())
+                },
+                node_map_builder: |input: &String| {
+                    input
+                        .lines()
+                        .skip(2)
+                        .map(|line| {
+                            let node = Node::from_str(line);
+                            (node.name, node)
+                        })
+                        .collect()
+                },
+                starting_nodes_builder: |node_map| {
+                    node_map
+                        .keys()
+                        .filter_map(|key| if key.ends_with('A') { Some(*key) } else { None })
+                        .collect()
+                },
+            }
+            .build(),
+        )
     }
 }
 
 #[derive(Debug)]
-struct Path<'a> {
+struct PathSequence<'a> {
     sequence: &'a str,
 }
 
@@ -65,7 +75,7 @@ struct Node<'a> {
     right: &'a str,
 }
 
-impl<'a> Path<'a> {
+impl<'a> PathSequence<'a> {
     fn from_str(str: &'a str) -> Self {
         Self { sequence: str }
     }

@@ -2,31 +2,31 @@ use ndarray::{s, Array, Array2};
 
 use super::Solution;
 
-pub struct Day13 {}
-
-impl Solution for Day13 {
-    fn part1(&self, input: &str) -> String {
-        input
-            .split("\n\n")
-            .map(|str| Rocks::from_str(str).reflection_point())
-            .sum::<usize>()
-            .to_string()
-    }
-
-    fn part2(&self, input: &str) -> String {
-        input
-            .split("\n\n")
-            .map(|str| Rocks::from_str(str).smudge())
-            .sum::<usize>()
-            .to_string()
-    }
-
-    fn parse(&mut self) {}
+pub struct Day13 {
+    rock_groups: Vec<Rocks>,
 }
 
-impl Day13 {
-    pub fn new() -> Self {
-        Self {}
+impl Solution for Day13 {
+    fn part1(&mut self) -> String {
+        self.rock_groups
+            .iter()
+            .map(|rocks| rocks.reflection_point())
+            .sum::<usize>()
+            .to_string()
+    }
+
+    fn part2(&mut self) -> String {
+        self.rock_groups
+            .iter()
+            .map(|rocks| rocks.smudge())
+            .sum::<usize>()
+            .to_string()
+    }
+
+    fn parse(input: String) -> Box<dyn Solution> {
+        Box::new(Self {
+            rock_groups: input.split("\n\n").map(Rocks::from_str).collect(),
+        })
     }
 }
 

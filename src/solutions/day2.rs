@@ -1,16 +1,17 @@
 use super::Solution;
 
-pub struct Day2;
+pub struct Day2 {
+    games: Vec<Game>,
+}
 
 impl Solution for Day2 {
-    fn part1(&self, input: &str) -> String {
+    fn part1(&mut self) -> String {
         let red = 12;
         let green = 13;
         let blue = 14;
 
-        input
-            .lines()
-            .map(Game::from_str)
+        self.games
+            .iter()
             .filter(|game| {
                 game.groups
                     .iter()
@@ -21,17 +22,20 @@ impl Solution for Day2 {
             .to_string()
     }
 
-    fn part2(&self, input: &str) -> String {
-        input
-            .lines()
-            .map(Game::from_str)
+    fn part2(&mut self) -> String {
+        self.games
+            .iter()
             .map(|game| game.mins())
             .map(|min| min.red * min.blue * min.green)
             .sum::<usize>()
             .to_string()
     }
 
-    fn parse(&mut self) {}
+    fn parse(input: String) -> Box<dyn Solution> {
+        Box::new(Self {
+            games: input.lines().map(Game::from_str).collect(),
+        })
+    }
 }
 
 #[derive(Debug)]

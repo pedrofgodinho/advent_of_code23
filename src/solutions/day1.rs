@@ -1,10 +1,12 @@
 use super::Solution;
 
-pub struct Day1;
+pub struct Day1 {
+    input: String,
+}
 
 impl Solution for Day1 {
-    fn part1(&self, input: &str) -> String {
-        input
+    fn part1(&mut self) -> String {
+        self.input
             .lines()
             .map(|line| {
                 let mut iter = line.chars().filter_map(|digit| digit.to_digit(10));
@@ -16,8 +18,8 @@ impl Solution for Day1 {
             .to_string()
     }
 
-    fn part2(&self, input: &str) -> String {
-        let sum: u32 = input
+    fn part2(&mut self) -> String {
+        self.input
             .lines()
             .map(|line| {
                 let mut first = 0;
@@ -39,11 +41,13 @@ impl Solution for Day1 {
                 }
                 first * 10 + last
             })
-            .sum();
-        sum.to_string()
+            .sum::<u32>()
+            .to_string()
     }
 
-    fn parse(&mut self) {}
+    fn parse(input: String) -> Box<dyn Solution> {
+        Box::new(Self { input })
+    }
 }
 
 fn get_digit(string: &str) -> Option<u32> {

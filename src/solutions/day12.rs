@@ -7,35 +7,43 @@ use cached::SizedCache;
 
 use super::Solution;
 
-pub struct Day12 {}
+pub struct Day12 {
+    rows: Vec<StatusRow>,
+    rows_repeating: Vec<StatusRow>,
+}
 
 impl Solution for Day12 {
-    fn part1(&self, input: &str) -> String {
-        let rows = input.lines().map(StatusRow::from_line).collect::<Vec<_>>();
-        rows.into_iter()
+    fn part1(&mut self) -> String {
+        self.rows
+            .iter()
             .map(|row| row.count_solutions())
             .sum::<usize>()
             .to_string()
     }
 
-    fn part2(&self, input: &str) -> String {
-        let rows = input
-            .lines()
-            .map(StatusRow::from_line_repeating)
-            .collect::<Vec<_>>();
-        rows.into_iter()
+    fn part2(&mut self) -> String {
+        self.rows_repeating
+            .iter()
             .enumerate()
             .map(|(_, row)| row.count_solutions())
             .sum::<usize>()
             .to_string()
     }
 
-    fn parse(&mut self) {}
-}
-
-impl Day12 {
-    pub fn new() -> Self {
-        Self {}
+    fn parse(input: String) -> Box<dyn Solution> {
+        let (rows, rows_repeating) = input
+            .lines()
+            .map(|line| {
+                (
+                    StatusRow::from_line(line),
+                    StatusRow::from_line_repeating(line),
+                )
+            })
+            .unzip();
+        Box::new(Self {
+            rows,
+            rows_repeating,
+        })
     }
 }
 
@@ -112,7 +120,7 @@ impl StatusRow {
         }
     }
 
-    fn count_solutions(self) -> usize {
+    fn count_solutions(&self) -> usize {
         count_solutions_aux(&self.springs, &self.groups, 0)
     }
 }

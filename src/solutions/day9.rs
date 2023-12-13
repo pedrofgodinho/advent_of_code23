@@ -1,32 +1,29 @@
 use super::Solution;
 
-pub struct Day9 {}
+pub struct Day9 {
+    reports: Vec<Report>,
+}
 
 impl Solution for Day9 {
-    fn part1(&self, input: &str) -> String {
-        let reports = input.lines().map(Report::from_line).collect::<Vec<_>>();
-        reports
+    fn part1(&mut self) -> String {
+        self.reports
             .iter()
             .map(|report| report.find_next_number())
             .sum::<isize>()
             .to_string()
     }
 
-    fn part2(&self, input: &str) -> String {
-        let reports = input.lines().map(Report::from_line).collect::<Vec<_>>();
-        reports
+    fn part2(&mut self) -> String {
+        self.reports
             .iter()
             .map(|report| report.find_previous_number())
             .sum::<isize>()
             .to_string()
     }
 
-    fn parse(&mut self) {}
-}
-
-impl Day9 {
-    pub fn new() -> Self {
-        Self {}
+    fn parse(input: String) -> Box<dyn Solution> {
+        let reports = input.lines().map(Report::from_line).collect::<Vec<_>>();
+        Box::new(Self { reports })
     }
 }
 

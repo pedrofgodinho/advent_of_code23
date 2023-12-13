@@ -12,26 +12,30 @@ mod day7;
 mod day8;
 mod day9;
 
+pub type ParserFn = fn(String) -> Box<dyn Solution>;
+
 pub trait Solution: Sync + Send {
-    fn parse(&mut self);
-    fn part1(&self, input: &str) -> String;
-    fn part2(&self, input: &str) -> String;
+    fn parse(input: String) -> Box<dyn Solution>
+    where
+        Self: Sized;
+    fn part1(&mut self) -> String;
+    fn part2(&mut self) -> String;
 }
 
-pub fn get_solutions() -> [Box<dyn Solution>; 13] {
+pub fn get_parser_fns() -> [ParserFn; 13] {
     [
-        Box::new(day1::Day1),
-        Box::new(day2::Day2 {}),
-        Box::new(day3::Day3::new()),
-        Box::new(day4::Day4::new()),
-        Box::new(day5::Day5::new()),
-        Box::new(day6::Day6::new()),
-        Box::new(day7::Day7::new()),
-        Box::new(day8::Day8::new()),
-        Box::new(day9::Day9::new()),
-        Box::new(day10::Day10::new()),
-        Box::new(day11::Day11::new()),
-        Box::new(day12::Day12::new()),
-        Box::new(day13::Day13::new()),
+        day1::Day1::parse,
+        day2::Day2::parse,
+        day3::Day3::parse,
+        day4::Day4::parse,
+        day5::Day5::parse,
+        day6::Day6::parse,
+        day7::Day7::parse,
+        day8::Day8::parse,
+        day9::Day9::parse,
+        day10::Day10::parse,
+        day11::Day11::parse,
+        day12::Day12::parse,
+        day13::Day13::parse,
     ]
 }

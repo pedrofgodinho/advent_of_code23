@@ -1,23 +1,23 @@
 use super::Solution;
 
-pub struct Day4 {}
+pub struct Day4 {
+    cards: Vec<Card>,
+}
 
 impl Solution for Day4 {
-    fn part1(&self, input: &str) -> String {
-        input
-            .lines()
-            .map(Card::parse)
+    fn part1(&mut self) -> String {
+        self.cards
+            .iter()
             .map(|card| card.value())
             .sum::<usize>()
             .to_string()
     }
 
-    fn part2(&self, input: &str) -> String {
-        let cards: Vec<_> = input.lines().map(Card::parse).collect();
+    fn part2(&mut self) -> String {
         let mut counts = Vec::new();
-        counts.resize(cards.len(), 1);
+        counts.resize(self.cards.len(), 1);
 
-        for card in cards {
+        for card in &self.cards {
             let matches = card.match_count();
             let card_count = counts[card.id];
             for i in 1..=matches {
@@ -31,12 +31,10 @@ impl Solution for Day4 {
         counts.iter().sum::<usize>().to_string()
     }
 
-    fn parse(&mut self) {}
-}
-
-impl Day4 {
-    pub fn new() -> Self {
-        Day4 {}
+    fn parse(input: String) -> Box<dyn Solution> {
+        Box::new(Self {
+            cards: input.lines().map(Card::parse).collect(),
+        })
     }
 }
 

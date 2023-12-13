@@ -1,43 +1,42 @@
 use super::Solution;
 use itertools::Itertools;
 
-pub struct Day7 {}
-
-impl Solution for Day7 {
-    fn part1(&self, input: &str) -> String {
-        let mut hands = input
-            .lines()
-            .map(|line| Hand::from_line(line, false))
-            .collect::<Vec<_>>();
-        hands.sort();
-        hands
-            .iter()
-            .enumerate()
-            .map(|(idx, hand)| (idx + 1) * hand.bid)
-            .sum::<usize>()
-            .to_string()
-    }
-
-    fn part2(&self, input: &str) -> String {
-        let mut hands = input
-            .lines()
-            .map(|line| Hand::from_line(line, true))
-            .collect::<Vec<_>>();
-        hands.sort();
-        hands
-            .iter()
-            .enumerate()
-            .map(|(idx, hand)| (idx + 1) * hand.bid)
-            .sum::<usize>()
-            .to_string()
-    }
-
-    fn parse(&mut self) {}
+pub struct Day7 {
+    hands_1: Vec<Hand>,
+    hands_2: Vec<Hand>,
 }
 
-impl Day7 {
-    pub fn new() -> Self {
-        Self {}
+impl Solution for Day7 {
+    fn part1(&mut self) -> String {
+        self.hands_1.sort();
+        self.hands_1
+            .iter()
+            .enumerate()
+            .map(|(idx, hand)| (idx + 1) * hand.bid)
+            .sum::<usize>()
+            .to_string()
+    }
+
+    fn part2(&mut self) -> String {
+        self.hands_2.sort();
+        self.hands_2
+            .iter()
+            .enumerate()
+            .map(|(idx, hand)| (idx + 1) * hand.bid)
+            .sum::<usize>()
+            .to_string()
+    }
+
+    fn parse(input: String) -> Box<dyn Solution> {
+        let hands = input
+            .lines()
+            .map(|line| (Hand::from_line(line, false), Hand::from_line(line, true)))
+            .unzip();
+
+        Box::new(Self {
+            hands_1: hands.0,
+            hands_2: hands.1,
+        })
     }
 }
 

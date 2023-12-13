@@ -1,9 +1,24 @@
 use super::Solution;
 
-pub struct Day6 {}
+pub struct Day6 {
+    races: Vec<Race>,
+    race: Race,
+}
 
 impl Solution for Day6 {
-    fn part1(&self, input: &str) -> String {
+    fn part1(&mut self) -> String {
+        self.races
+            .iter()
+            .map(|race| race.ways_to_beat())
+            .product::<usize>()
+            .to_string()
+    }
+
+    fn part2(&mut self) -> String {
+        self.race.ways_to_beat().to_string()
+    }
+
+    fn parse(input: String) -> Box<dyn Solution> {
         let mut lines = input.lines();
         let times = lines
             .next()
@@ -17,20 +32,11 @@ impl Solution for Day6 {
             .split_whitespace()
             .skip(1)
             .map(|n| n.parse::<isize>().unwrap());
-
         let races = times
             .zip(distances)
             .map(|(time, distance)| Race { time, distance })
             .collect::<Vec<_>>();
 
-        races
-            .iter()
-            .map(|race| race.ways_to_beat())
-            .product::<usize>()
-            .to_string()
-    }
-
-    fn part2(&self, input: &str) -> String {
         let mut lines = input.lines();
         let time = lines
             .next()
@@ -52,15 +58,8 @@ impl Solution for Day6 {
             .parse::<isize>()
             .unwrap();
         let race = Race { time, distance };
-        race.ways_to_beat().to_string()
-    }
 
-    fn parse(&mut self) {}
-}
-
-impl Day6 {
-    pub fn new() -> Self {
-        Self {}
+        Box::new(Self { races, race })
     }
 }
 

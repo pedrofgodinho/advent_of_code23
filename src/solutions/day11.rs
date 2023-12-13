@@ -2,51 +2,48 @@ use ndarray::{Array, Array2};
 
 use super::Solution;
 
-pub struct Day11 {}
-
-impl Solution for Day11 {
-    fn part1(&self, input: &str) -> String {
-        let mut universe = Universe::from_str(input);
-        universe.expand(1);
-        let galaxies = universe.galaxies;
-        let len = galaxies.len();
-        let mut sum = 0;
-        for i in 0..len {
-            for j in (i + 1)..len {
-                let a = galaxies[i];
-                let b = galaxies[j];
-                let distance =
-                    (b.0 as isize - a.0 as isize).abs() + (b.1 as isize - a.1 as isize).abs();
-                sum += distance;
-            }
-        }
-        sum.to_string()
-    }
-
-    fn part2(&self, input: &str) -> String {
-        let mut universe = Universe::from_str(input);
-        universe.expand(1000000 - 1);
-        let galaxies = universe.galaxies;
-        let len = galaxies.len();
-        let mut sum = 0;
-        for i in 0..len {
-            for j in (i + 1)..len {
-                let a = galaxies[i];
-                let b = galaxies[j];
-                let distance =
-                    (b.0 as isize - a.0 as isize).abs() + (b.1 as isize - a.1 as isize).abs();
-                sum += distance;
-            }
-        }
-        sum.to_string()
-    }
-
-    fn parse(&mut self) {}
+pub struct Day11 {
+    universe: Universe,
 }
 
-impl Day11 {
-    pub fn new() -> Self {
-        Self {}
+impl Solution for Day11 {
+    fn part1(&mut self) -> String {
+        self.universe.expand(1);
+        let galaxies = &self.universe.galaxies;
+        let len = galaxies.len();
+        let mut sum = 0;
+        for i in 0..len {
+            for j in (i + 1)..len {
+                let a = galaxies[i];
+                let b = galaxies[j];
+                let distance =
+                    (b.0 as isize - a.0 as isize).abs() + (b.1 as isize - a.1 as isize).abs();
+                sum += distance;
+            }
+        }
+        sum.to_string()
+    }
+
+    fn part2(&mut self) -> String {
+        self.universe.expand(1000000 - 1);
+        let galaxies = &self.universe.galaxies;
+        let len = galaxies.len();
+        let mut sum = 0;
+        for i in 0..len {
+            for j in (i + 1)..len {
+                let a = galaxies[i];
+                let b = galaxies[j];
+                let distance =
+                    (b.0 as isize - a.0 as isize).abs() + (b.1 as isize - a.1 as isize).abs();
+                sum += distance;
+            }
+        }
+        sum.to_string()
+    }
+
+    fn parse(input: String) -> Box<dyn Solution> {
+        let universe = Universe::from_str(&input);
+        Box::new(Self { universe })
     }
 }
 

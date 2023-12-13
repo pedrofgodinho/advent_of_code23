@@ -1,22 +1,17 @@
 use super::Solution;
 
-pub struct Day5 {}
+pub struct Day5 {
+    seeds: Vec<isize>,
+    mappings: Vec<Mapping>,
+    seeds2: Vec<SRange>,
+}
 
 impl Solution for Day5 {
-    fn part1(&self, input: &str) -> String {
-        let mut groups = input.split("\n\n");
-        let seeds = groups
-            .next()
-            .unwrap()
-            .split(' ')
-            .skip(1)
-            .map(|seed| seed.parse::<isize>().unwrap())
-            .collect::<Vec<_>>();
-        let mappings = groups.map(Mapping::parse).collect::<Vec<_>>();
-        seeds
+    fn part1(&mut self) -> String {
+        self.seeds
             .iter()
             .map(|&seed| {
-                mappings
+                self.mappings
                     .iter()
                     .fold(seed, |accum, mapping| mapping.apply(accum))
             })
@@ -25,42 +20,12 @@ impl Solution for Day5 {
             .to_string()
     }
 
-    fn part2(&self, input: &str) -> String {
-        let mut groups = input.split("\n\n");
-        let seeds = groups
-            .next()
-            .unwrap()
-            .split(' ')
-            .skip(1)
-            .map(|seed| seed.parse::<isize>().unwrap())
-            .collect::<Vec<_>>();
-        let seeds = seeds
-            .chunks_exact(2)
-            .map(|chunk| SRange {
-                start: chunk[0],
-                end: chunk[0] + chunk[1] - 1,
-            })
-            .collect::<Vec<_>>();
-
-        let mappings = groups.map(Mapping::parse).collect::<Vec<_>>();
-
-        // let m = seeds
-        //     .into_par_iter()
-        //     .flat_map(|seed| seed.start..seed.end)
-        //     .map(|seed| {
-        //         mappings
-        //             .iter()
-        //             .fold(seed, |accum, mapping| mapping.apply(accum))
-        //     })
-        //     .min()
-        //     .unwrap();
-        // m.to_string()
-
-        seeds
+    fn part2(&mut self) -> String {
+        self.seeds2
             .iter()
             .map(|srange| {
                 let mut range = vec![*srange];
-                for mapping in mappings.iter() {
+                for mapping in self.mappings.iter() {
                     mapping.apply_range(&mut range);
                 }
                 range.iter().min_by_key(|range| range.start).unwrap().start
@@ -70,12 +35,28 @@ impl Solution for Day5 {
             .to_string()
     }
 
-    fn parse(&mut self) {}
-}
-
-impl Day5 {
-    pub fn new() -> Self {
-        Day5 {}
+    fn parse(input: String) -> Box<dyn Solution> {
+        let mut groups = input.split("\n\n");
+        let seeds = groups
+            .next()
+            .unwrap()
+            .split(' ')
+            .skip(1)
+            .map(|seed| seed.parse().unwrap())
+            .collect::<Vec<_>>();
+        let mappings = groups.map(Mapping::parse).collect();
+        let seeds2 = seeds
+            .chunks_exact(2)
+            .map(|chunk| SRange {
+                start: chunk[0],
+                end: chunk[0] + chunk[1] - 1,
+            })
+            .collect::<Vec<_>>();
+        Box::new(Self {
+            seeds,
+            mappings,
+            seeds2,
+        })
     }
 }
 

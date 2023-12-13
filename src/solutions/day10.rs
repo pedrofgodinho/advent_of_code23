@@ -4,26 +4,23 @@ use ndarray::{Array, Array2};
 
 use super::Solution;
 
-pub struct Day10 {}
-
-impl Solution for Day10 {
-    fn part1(&self, input: &str) -> String {
-        let mut map = PipeMap::from_str(input);
-        ((map.walk_loop_and_fix() + 1) / 2).to_string()
-    }
-
-    fn part2(&self, input: &str) -> String {
-        let mut map = PipeMap::from_str(input);
-        map.walk_loop_and_fix();
-        map.enclosed().to_string()
-    }
-
-    fn parse(&mut self) {}
+pub struct Day10 {
+    map: PipeMap,
 }
 
-impl Day10 {
-    pub fn new() -> Self {
-        Self {}
+impl Solution for Day10 {
+    fn part1(&mut self) -> String {
+        ((self.map.walk_loop_and_fix() + 1) / 2).to_string()
+    }
+
+    fn part2(&mut self) -> String {
+        self.map.walk_loop_and_fix();
+        self.map.enclosed().to_string()
+    }
+
+    fn parse(input: String) -> Box<dyn Solution> {
+        let map = PipeMap::from_str(&input);
+        Box::new(Self { map })
     }
 }
 

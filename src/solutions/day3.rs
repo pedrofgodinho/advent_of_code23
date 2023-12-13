@@ -4,21 +4,17 @@ use super::Solution;
 use itertools::*;
 use ndarray::{Array, Array2};
 
-pub struct Day3 {}
-
-impl Day3 {
-    pub fn new() -> Self {
-        Self {}
-    }
+pub struct Day3 {
+    rows: usize,
+    cols: usize,
+    bytes: Array2<u8>,
 }
 
 impl Solution for Day3 {
-    fn part1(&self, input: &str) -> String {
-        let cols = input.find('\n').unwrap();
-        let rows = input.lines().count();
-        let bytes = Array::from_iter(input.bytes().filter(|&b| b != b'\n'))
-            .into_shape((cols, rows))
-            .unwrap();
+    fn part1(&mut self) -> String {
+        let bytes = &self.bytes;
+        let rows = self.rows;
+        let cols = self.cols;
         let mut around_symbols = Array2::from_elem(bytes.raw_dim(), false);
 
         bytes.indexed_iter().for_each(|((i, j), &b)| match b {
@@ -57,21 +53,16 @@ impl Solution for Day3 {
         total.to_string()
     }
 
-    fn part2(&self, input: &str) -> String {
-        let cols = input.find('\n').unwrap();
-        let rows = input.lines().count();
-        let bytes = Array::from_iter(input.bytes().filter(|&b| b != b'\n'))
-            .into_shape((cols, rows))
-            .unwrap();
-        let mut gear_numbers = Array2::from_elem(bytes.raw_dim(), HashSet::new());
+    fn part2(&mut self) -> String {
+        let mut gear_numbers = Array2::from_elem(self.bytes.raw_dim(), HashSet::new());
         let mut gear_count = 0;
 
-        bytes.indexed_iter().for_each(|((i, j), &b)| {
+        self.bytes.indexed_iter().for_each(|((i, j), &b)| {
             if b == b'*' {
                 for offset in (-1..=1).cartesian_product(-1..=1).filter(|&c| c != (0, 0)) {
                     let i = (i as isize + offset.0) as usize;
                     let j = (j as isize + offset.1) as usize;
-                    if (0..cols).contains(&i) && (0..rows).contains(&j) {
+                    if (0..self.cols).contains(&i) && (0..self.rows).contains(&j) {
                         gear_numbers[[i, j]].insert(gear_count);
                     }
                 }
@@ -82,7 +73,7 @@ impl Solution for Day3 {
         let mut gear_groups = Vec::new();
         gear_groups.resize(gear_count, Vec::new());
 
-        for (bytes, gears) in bytes.rows().into_iter().zip(gear_numbers.rows()) {
+        for (bytes, gears) in self.bytes.rows().into_iter().zip(gear_numbers.rows()) {
             let mut number = 0;
             let mut number_gears: Option<HashSet<_>> = None;
 
@@ -115,5 +106,12 @@ impl Solution for Day3 {
             .to_string()
     }
 
-    fn parse(&mut self) {}
+    fn parse(input: String) -> Box<dyn Solution> {
+        let cols = input.find('\n').unwrap();
+        let rows = input.lines().count();
+        let bytes = Array::from_iter(input.bytes().filter(|&b| b != b'\n'))
+            .into_shape((cols, rows))
+            .unwrap();
+        Box::new(Self { rows, cols, bytes })
+    }
 }

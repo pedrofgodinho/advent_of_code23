@@ -1,14 +1,13 @@
-use crate::solutions::get_solutions;
+use crate::solutions::get_parser_fns;
 use indoc::indoc;
 
-fn test_day(day: usize, input: &str, result: &str, part: Part) {
-    let mut solutions = get_solutions();
-    let solution = &mut solutions[day - 1];
-    solution.parse();
+fn test_day(day: usize, input: String, result: &str, part: Part) {
+    let parser_fn = get_parser_fns()[day - 1];
+    let mut solution = parser_fn(input);
 
     match part {
-        Part::Part1 => assert_eq!(solution.part1(input), result),
-        Part::Part2 => assert_eq!(solution.part2(input), result),
+        Part::Part1 => assert_eq!(solution.part1(), result),
+        Part::Part2 => assert_eq!(solution.part2(), result),
     }
 }
 
@@ -19,18 +18,18 @@ enum Part {
 
 #[test]
 fn day01_part1() {
-    let input1 = indoc! {"
+    let input = indoc! {"
             1abc2
             pqr3stu8vwx
             a1b2c3d4e5f
             treb7uchet
         "};
-    test_day(1, input1, "142", Part::Part1);
+    test_day(1, input.to_string(), "142", Part::Part1);
 }
 
 #[test]
 fn day01_part2() {
-    let input2 = indoc! {"
+    let input = indoc! {"
             two1nine
             eightwothree
             abcone2threexyz
@@ -39,7 +38,7 @@ fn day01_part2() {
             zoneight234
             7pqrstsixteen
         "};
-    test_day(1, input2, "281", Part::Part2);
+    test_day(1, input.to_string(), "281", Part::Part2);
 }
 
 const DAY02_INPUT: &str = indoc! {"
@@ -52,12 +51,12 @@ const DAY02_INPUT: &str = indoc! {"
 
 #[test]
 fn day02_part1() {
-    test_day(2, DAY02_INPUT, "8", Part::Part1);
+    test_day(2, DAY02_INPUT.to_string(), "8", Part::Part1);
 }
 
 #[test]
 fn day02_part2() {
-    test_day(2, DAY02_INPUT, "2286", Part::Part2);
+    test_day(2, DAY02_INPUT.to_string(), "2286", Part::Part2);
 }
 
 const DAY03_INPUT: &str = indoc! {"
@@ -75,12 +74,12 @@ const DAY03_INPUT: &str = indoc! {"
 
 #[test]
 fn day03_part1() {
-    test_day(3, DAY03_INPUT, "4361", Part::Part1);
+    test_day(3, DAY03_INPUT.to_string(), "4361", Part::Part1);
 }
 
 #[test]
 fn day03_part2() {
-    test_day(3, DAY03_INPUT, "467835", Part::Part2);
+    test_day(3, DAY03_INPUT.to_string(), "467835", Part::Part2);
 }
 
 const DAY04_INPUT: &str = indoc! {"
@@ -94,12 +93,12 @@ const DAY04_INPUT: &str = indoc! {"
 
 #[test]
 fn day04_part1() {
-    test_day(4, DAY04_INPUT, "13", Part::Part1);
+    test_day(4, DAY04_INPUT.to_string(), "13", Part::Part1);
 }
 
 #[test]
 fn day04_part2() {
-    test_day(4, DAY04_INPUT, "30", Part::Part2);
+    test_day(4, DAY04_INPUT.to_string(), "30", Part::Part2);
 }
 
 const DAY05_INPUT: &str = indoc! {"
@@ -140,12 +139,12 @@ const DAY05_INPUT: &str = indoc! {"
 
 #[test]
 fn day05_part1() {
-    test_day(5, DAY05_INPUT, "35", Part::Part1);
+    test_day(5, DAY05_INPUT.to_string(), "35", Part::Part1);
 }
 
 #[test]
 fn day05_part2() {
-    test_day(5, DAY05_INPUT, "46", Part::Part2);
+    test_day(5, DAY05_INPUT.to_string(), "46", Part::Part2);
 }
 
 const DAY06_INPUT: &str = indoc! {"
@@ -155,12 +154,12 @@ const DAY06_INPUT: &str = indoc! {"
 
 #[test]
 fn day06_part1() {
-    test_day(6, DAY06_INPUT, "288", Part::Part1);
+    test_day(6, DAY06_INPUT.to_string(), "288", Part::Part1);
 }
 
 #[test]
 fn day06_part2() {
-    test_day(6, DAY06_INPUT, "71503", Part::Part2);
+    test_day(6, DAY06_INPUT.to_string(), "71503", Part::Part2);
 }
 
 const DAY07_INPUT: &str = indoc! {"
@@ -173,17 +172,17 @@ const DAY07_INPUT: &str = indoc! {"
 
 #[test]
 fn day07_part1() {
-    test_day(7, DAY07_INPUT, "6440", Part::Part1);
+    test_day(7, DAY07_INPUT.to_string(), "6440", Part::Part1);
 }
 
 #[test]
 fn day07_part2() {
-    test_day(7, DAY07_INPUT, "5905", Part::Part2);
+    test_day(7, DAY07_INPUT.to_string(), "5905", Part::Part2);
 }
 
 #[test]
 fn day08_part1() {
-    let input1 = indoc! {"\
+    let input = indoc! {"\
             RL
 
             AAA = (BBB, CCC)
@@ -194,12 +193,12 @@ fn day08_part1() {
             GGG = (GGG, GGG)
             ZZZ = (ZZZ, ZZZ)
         "};
-    test_day(8, input1, "2", Part::Part1);
+    test_day(8, input.to_string(), "2", Part::Part1);
 }
 
 #[test]
 fn day08_part2() {
-    let input2 = indoc! {"\
+    let input = indoc! {"\
             LR
 
             11A = (11B, XXX)
@@ -211,7 +210,7 @@ fn day08_part2() {
             22Z = (22B, 22B)
             XXX = (XXX, XXX)
         "};
-    test_day(8, input2, "6", Part::Part2);
+    test_day(8, input.to_string(), "6", Part::Part2);
 }
 
 const DAY09_INPUT: &str = indoc! {"
@@ -222,37 +221,37 @@ const DAY09_INPUT: &str = indoc! {"
 
 #[test]
 fn day09_part1() {
-    test_day(9, DAY09_INPUT, "114", Part::Part1);
+    test_day(9, DAY09_INPUT.to_string(), "114", Part::Part1);
 }
 
 #[test]
 fn day09_part2() {
-    test_day(9, DAY09_INPUT, "2", Part::Part2);
+    test_day(9, DAY09_INPUT.to_string(), "2", Part::Part2);
 }
 
 #[test]
 fn day10_part1() {
-    let input1_1 = indoc! {"
+    let input1 = indoc! {"
             -L|F7
             7S-7|
             L|7||
             -L-J|
             L|-JF
         "};
-    let input1_2 = indoc! {"
+    let input2 = indoc! {"
             7-F7-
             .FJ|7
             SJLL7
             |F--J
             LJ.LJ
         "};
-    test_day(10, input1_1, "4", Part::Part1);
-    test_day(10, input1_2, "8", Part::Part1);
+    test_day(10, input1.to_string(), "4", Part::Part1);
+    test_day(10, input2.to_string(), "8", Part::Part1);
 }
 
 #[test]
 fn day10_part2() {
-    let input2_1 = indoc! {"
+    let input1 = indoc! {"
             .F----7F7F7F7F-7....
             .|F--7||||||||FJ....
             .||.FJ||||||||L7....
@@ -264,7 +263,7 @@ fn day10_part2() {
             ....FJL-7.||.||||...
             ....L---J.LJ.LJLJ...
         "};
-    let input2_2 = indoc! {"
+    let input2 = indoc! {"
             FF7FSF7F7F7F7F7F---7
             L|LJ||||||||||||F--J
             FL-7LJLJ||||||LJL-77
@@ -276,8 +275,8 @@ fn day10_part2() {
             L.L7LFJ|||||FJL7||LJ
             L7JLJL-JLJLJL--JLJ.L
         "};
-    test_day(10, input2_1, "8", Part::Part2);
-    test_day(10, input2_2, "10", Part::Part2);
+    test_day(10, input1.to_string(), "8", Part::Part2);
+    test_day(10, input2.to_string(), "10", Part::Part2);
 }
 
 const DAY11_INPUT: &str = indoc! {"
@@ -295,12 +294,12 @@ const DAY11_INPUT: &str = indoc! {"
 
 #[test]
 fn day11_part1() {
-    test_day(11, DAY11_INPUT, "374", Part::Part1);
+    test_day(11, DAY11_INPUT.to_string(), "374", Part::Part1);
 }
 
 #[test]
 fn day11_part2() {
-    test_day(11, DAY11_INPUT, "82000210", Part::Part2);
+    test_day(11, DAY11_INPUT.to_string(), "82000210", Part::Part2);
 }
 
 const DAY12_INPUT: &str = indoc! {"
@@ -314,12 +313,12 @@ const DAY12_INPUT: &str = indoc! {"
 
 #[test]
 fn day12_part1() {
-    test_day(12, DAY12_INPUT, "21", Part::Part1);
+    test_day(12, DAY12_INPUT.to_string(), "21", Part::Part1);
 }
 
 #[test]
 fn day12_part2() {
-    test_day(12, DAY12_INPUT, "525152", Part::Part2);
+    test_day(12, DAY12_INPUT.to_string(), "525152", Part::Part2);
 }
 
 const DAY13_INPUT: &str = indoc! {"
@@ -342,10 +341,10 @@ const DAY13_INPUT: &str = indoc! {"
 
 #[test]
 fn day13_part1() {
-    test_day(13, DAY13_INPUT, "405", Part::Part1);
+    test_day(13, DAY13_INPUT.to_string(), "405", Part::Part1);
 }
 
 #[test]
 fn day13_part2() {
-    test_day(13, DAY13_INPUT, "400", Part::Part2);
+    test_day(13, DAY13_INPUT.to_string(), "400", Part::Part2);
 }

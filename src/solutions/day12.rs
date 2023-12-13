@@ -119,8 +119,8 @@ impl StatusRow {
 
 fn hash(row: &[SpringStatus], groups: &[usize], count: usize) -> u64 {
     let mut hasher = AHasher::default();
-    row.hash(&mut hasher);
-    groups.hash(&mut hasher);
+    row.as_ptr().hash(&mut hasher);
+    groups.as_ptr().hash(&mut hasher);
     count.hash(&mut hasher);
     hasher.finish()
 }

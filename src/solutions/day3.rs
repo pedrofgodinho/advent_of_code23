@@ -31,13 +31,13 @@ impl Solution for Day3 {
         });
 
         let mut total = 0;
-        for (bytes, arounds) in bytes.rows().into_iter().zip(around_symbols.rows()) {
+        for (byte_row, around_row) in bytes.rows().into_iter().zip(around_symbols.rows()) {
             let mut number = 0;
             let mut is_around = false;
 
-            for (byte, around) in bytes.into_iter().zip(arounds) {
-                is_around |= around;
+            for (byte, around) in byte_row.into_iter().zip(around_row) {
                 if let Some(digit) = (*byte as char).to_digit(10) {
+                    is_around |= around;
                     number *= 10;
                     number += digit;
                 } else {
@@ -47,6 +47,9 @@ impl Solution for Day3 {
                     number = 0;
                     is_around = false;
                 }
+            }
+            if is_around {
+                total += number;
             }
         }
 
@@ -110,7 +113,7 @@ impl Solution for Day3 {
         let cols = input.find('\n').unwrap();
         let rows = input.lines().count();
         let bytes = Array::from_iter(input.bytes().filter(|&b| b != b'\n'))
-            .into_shape((cols, rows))
+            .into_shape((rows, cols))
             .unwrap();
         Box::new(Self { rows, cols, bytes })
     }

@@ -130,7 +130,7 @@ fn run_day(solution: ParserFn, part: Option<i64>, input: String) -> DayResult {
 }
 
 fn print_results(results: Vec<CompleteDayResult>, totals: Totals) {
-    if results.len() == 0 {
+    if results.is_empty() {
         return;
     }
     let totals = if results.len() > 1 {

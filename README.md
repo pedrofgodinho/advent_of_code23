@@ -20,3 +20,4 @@ Solutions to [Advent of Code 2023](https://adventofcode.com/2023) in Rust 🎄
 | [11](src/solutions/day11.rs) |   ⭐   |   ⭐   | Not much to say, it's a fairly easy challenge. Not super interesting, but not a bad challenge either. 
 | [12](src/solutions/day12.rs) |   ⭐   |   ⭐   | Maybe it's just because I'm not used to dynamic programming, but I found this challenge *very* hard. Pretty fun challenge though. My implementation still takes 50ms to run, could probably optimize it further.
 | [13](src/solutions/day13.rs) |   ⭐   |   ⭐   | Compared to previous days, it was a very easy challenge. Took it as an opportunity to learn more about ndarray. Enjoyable problem to solve overall
+| [14](src/solutions/day14.rs) |   ⭐   |   ⭐   | Not a very hard problem. Took me a little bit because I tried to do part 1 without mutating, which meant I had to rewrite most code for part 2. Overall, fairly easy challenge.

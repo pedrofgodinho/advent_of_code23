@@ -348,3 +348,26 @@ fn day13_part1() {
 fn day13_part2() {
     test_day(13, DAY13_INPUT.to_string(), "400", Part::Part2);
 }
+
+const DAY14_INPUT: &str = indoc! {"
+    O....#....
+    O.OO#....#
+    .....##...
+    OO.#O....O
+    .O.....O#.
+    O.#..O.#.#
+    ..O..#O..O
+    .......O..
+    #....###..
+    #OO..#....
+"};
+
+#[test]
+fn day14_part1() {
+    test_day(14, DAY14_INPUT.to_string(), "136", Part::Part1);
+}
+
+#[test]
+fn day14_part2() {
+    test_day(14, DAY14_INPUT.to_string(), "64", Part::Part2);
+}

@@ -3,13 +3,14 @@ use ndarray::{Array, Array2};
 use super::Solution;
 
 pub struct Day11 {
-    universe: Universe,
+    universe_1: Universe,
+    universe_2: Universe,
 }
 
 impl Solution for Day11 {
     fn part1(&mut self) -> String {
-        self.universe.expand(1);
-        let galaxies = &self.universe.galaxies;
+        self.universe_1.expand(1);
+        let galaxies = &self.universe_1.galaxies;
         let len = galaxies.len();
         let mut sum = 0;
         for i in 0..len {
@@ -25,8 +26,8 @@ impl Solution for Day11 {
     }
 
     fn part2(&mut self) -> String {
-        self.universe.expand(1000000 - 1);
-        let galaxies = &self.universe.galaxies;
+        self.universe_2.expand(1_000_000 - 1);
+        let galaxies = &self.universe_2.galaxies;
         let len = galaxies.len();
         let mut sum = 0;
         for i in 0..len {
@@ -43,11 +44,14 @@ impl Solution for Day11 {
 
     fn parse(input: String) -> Box<dyn Solution> {
         let universe = Universe::from_str(&input);
-        Box::new(Self { universe })
+        Box::new(Self {
+            universe_1: universe.clone(),
+            universe_2: universe,
+        })
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 struct Universe {
     unexpanded_cells: Array2<bool>,
     galaxies: Vec<(usize, usize)>,

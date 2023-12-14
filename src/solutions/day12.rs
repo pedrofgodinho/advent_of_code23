@@ -183,13 +183,11 @@ fn count_solutions_aux(row: &[SpringStatus], groups: &[usize], count: usize) -> 
                 } else {
                     return count_solutions_aux(&row[1..], groups, count + 1);
                 }
+            } else if groups[0] == count {
+                return count_solutions_aux(&row[1..], groups, 0);
             } else {
-                if groups[0] == count {
-                    return count_solutions_aux(&row[1..], groups, 0);
-                } else {
-                    return count_solutions_aux(&row[1..], groups, 0)
-                        + count_solutions_aux(&row[1..], groups, 1);
-                }
+                return count_solutions_aux(&row[1..], groups, 0)
+                    + count_solutions_aux(&row[1..], groups, 1);
             }
         }
     }

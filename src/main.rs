@@ -45,16 +45,14 @@ fn parse_day(str: &str) -> Result<Vec<usize>, String> {
             }
             _ => Err(format!("Invalid range: {}", str)),
         }
-    } else {
-        if let Ok(day) = str.parse::<usize>() {
-            if day > 25 || day == 0 {
-                Err(format!("Invalid day: {}", str))
-            } else {
-                Ok(vec![day])
-            }
-        } else {
+    } else if let Ok(day) = str.parse::<usize>() {
+        if day > 25 || day == 0 {
             Err(format!("Invalid day: {}", str))
+        } else {
+            Ok(vec![day])
         }
+    } else {
+        Err(format!("Invalid day: {}", str))
     }
 }
 
@@ -63,7 +61,7 @@ fn main() {
     let mut days = args
         .days
         .iter()
-        .flat_map(|day| parse_day(&day).unwrap())
+        .flat_map(|day| parse_day(day).unwrap())
         .collect::<Vec<_>>();
     days.sort();
     days.dedup();

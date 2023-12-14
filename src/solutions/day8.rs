@@ -19,7 +19,7 @@ pub struct Day8 {
 impl Solution for Day8 {
     fn part1(&mut self) -> String {
         self.borrow_path()
-            .solve_node_map(&self.borrow_node_map(), "AAA")
+            .solve_node_map(self.borrow_node_map(), "AAA")
             .to_string()
     }
 
@@ -28,7 +28,7 @@ impl Solution for Day8 {
             .iter()
             .map(|node| {
                 self.borrow_path()
-                    .solve_node_map(&self.borrow_node_map(), node)
+                    .solve_node_map(self.borrow_node_map(), node)
             })
             .fold(1, |accum, n| num::integer::lcm(n, accum))
             .to_string()

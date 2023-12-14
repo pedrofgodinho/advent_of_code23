@@ -176,7 +176,7 @@ fn print_results(results: Vec<CompleteDayResult>, totals: Totals) {
                 part2_result,
             ]
         })
-        .chain(totals.into_iter())
+        .chain(totals)
         .collect::<Vec<_>>();
 
     let mut ascii_table = AsciiTable::default();

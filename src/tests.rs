@@ -371,3 +371,15 @@ fn day14_part1() {
 fn day14_part2() {
     test_day(14, DAY14_INPUT.to_string(), "64", Part::Part2);
 }
+
+const DAY15_INPUT: &str = "rn=1,cm-,qp=3,cm=2,qp-,pc=4,ot=9,ab=5,pc-,pc=6,ot=7";
+
+#[test]
+fn day15_part1() {
+    test_day(15, DAY15_INPUT.to_string(), "1320", Part::Part1);
+}
+
+#[test]
+fn day15_part2() {
+    test_day(15, DAY15_INPUT.to_string(), "145", Part::Part2);
+}

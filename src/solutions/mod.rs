@@ -4,6 +4,7 @@ mod day11;
 mod day12;
 mod day13;
 mod day14;
+mod day15;
 mod day2;
 mod day3;
 mod day4;
@@ -23,7 +24,7 @@ pub trait Solution: Sync + Send {
     fn part2(&mut self) -> String;
 }
 
-pub fn get_parser_fns() -> [ParserFn; 14] {
+pub fn get_parser_fns() -> [ParserFn; 15] {
     [
         day1::Day1::parse,
         day2::Day2::parse,
@@ -39,5 +40,6 @@ pub fn get_parser_fns() -> [ParserFn; 14] {
         day12::Day12::parse,
         day13::Day13::parse,
         day14::Day14::parse,
+        day15::Day15::parse,
     ]
 }

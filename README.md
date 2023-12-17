@@ -22,3 +22,4 @@ Solutions to [Advent of Code 2023](https://adventofcode.com/2023) in Rust 🎄
 | [13](src/solutions/day13.rs) |   ⭐   |   ⭐   | Compared to previous days, it was a very easy challenge. Took it as an opportunity to learn more about ndarray. Enjoyable problem to solve overall
 | [14](src/solutions/day14.rs) |   ⭐   |   ⭐   | Not a very hard problem. Took me a little bit because I tried to do part 1 without mutating, which meant I had to rewrite most code for part 2. Overall, fairly easy challenge.
 | [15](src/solutions/day15.rs) |   ⭐   |   ⭐   | Had to read part two 4 or 5 times to understand the requirements, but otherwise, fairly easy challenge. Kinda hard to optimize in rust, since ideally we'd use a self referential struct. 
+| [16](src/solutions/day16.rs) |   ⭐   |   ⭐   | Fairly standard search algorithm implementation. Used a vec as a stack to avoid recursion. Took me a while to debug dumb mistakes in part 1, but otherwise pretty standard
